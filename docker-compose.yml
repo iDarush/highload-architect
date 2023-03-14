@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      - "POSTGRES_USER=architect"
+      - "POSTGRES_PASSWORD=mysecretpassword"
+      - "POSTGRES_DB=architect"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Architect.Web/Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://+:80
+      ASPNETCORE_ENVIRONMENT: Production
+      TOKEN_SECRET: my-super-token-secret
+      CONNECTION_STRING: User ID=architect;Password=mysecretpassword;Server=postgres;Port=5432;Database=architect;Pooling=true;LoadTableComposites=true;Minimum Pool Size=10;Maximum Pool Size=100;Connection Idle Lifetime=300;Keepalive=300;Tcp Keepalive=true;No Reset On Close=true;Command Timeout=180;
+    ports:
+      - "17981:80"
+    depends_on:
+      postgres:
+        condition: service_healthy

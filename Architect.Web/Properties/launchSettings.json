@@ -1,0 +1,15 @@
+﻿{
+    "profiles": {
+        "Architect.Web": {
+            "commandName": "Project",
+            "dotnetRunMessages": true,
+            "launchBrowser": false,
+            "applicationUrl": "http://localhost:7014",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "TOKEN_SECRET": "my-super-token-secret",
+                "CONNECTION_STRING": "User ID=architect;Password=mysecretpassword;Host=localhost;Port=17980;Database=highload-architect;Pooling=true;LoadTableComposites=true;Minimum Pool Size=10;Maximum Pool Size=100;Connection Idle Lifetime=300;Keepalive=300;Tcp Keepalive=true;No Reset On Close=true;Command Timeout=180;"
+            }
+        }
+    }
+}
