@@ -1,5 +1,6 @@
 using Architect.Web.BLL.Models;
 using Architect.Web.BLL.Services.Interfaces;
+using Architect.Web.DAL.Parameters;
 using Architect.Web.DAL.Repositories.Interfaces;
 using Mapster;
 
@@ -18,5 +19,17 @@ public class UserService : IUserService
     {
         var user = await _userRepository.GetById(id, cancellationToken);
         return user?.Adapt<UserModel?>();
+    }
+
+    public async Task<IReadOnlyCollection<UserModel>> SearchUsers(
+        string firstNamePrefix,
+        string lastNamePrefix,
+        CancellationToken cancellationToken)
+    {
+        var users = await _userRepository.Search(
+            new UserSearchParameter(FirstNamePrefix: firstNamePrefix, LastNamePrefix: lastNamePrefix),
+            cancellationToken);
+
+        return users.Adapt<UserModel[]>();
     }
 }

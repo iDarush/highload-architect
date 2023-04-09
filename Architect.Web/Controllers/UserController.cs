@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Architect.Web.BLL.Services.Interfaces;
 using Architect.Web.Dto;
 using Architect.Web.Dto.Requests;
@@ -41,5 +42,20 @@ public class UserController : ControllerBase
         }
 
         return Ok(user.Adapt<UserResponse>());
+    }
+
+    [HttpGet("search")]
+    public async Task<ActionResult<UserResponse[]>> Search(
+        [FromQuery(Name = "first_name")] [Required(AllowEmptyStrings = false)]
+        string firstName,
+        [FromQuery(Name = "last_name")] [Required(AllowEmptyStrings = false)]
+        string lastName,
+        CancellationToken cancellationToken)
+    {
+        var users = await _userService.SearchUsers(
+            firstName,
+            lastName,
+            cancellationToken);
+        return Ok(users.Adapt<UserResponse[]>());
     }
 }

@@ -10,7 +10,7 @@ public class AddUser : Migration
         Execute.Sql(@"
             create table if not exists users
             (
-                id uuid DEFAULT uuid_generate_v4() constraint users_pk  primary key,
+                id uuid DEFAULT uuid_generate_v4() constraint users_pk primary key,
                 first_name text not null,
                 last_name text not null,
                 age smallint not null,

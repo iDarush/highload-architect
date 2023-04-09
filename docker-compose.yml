@@ -4,7 +4,10 @@ services:
   postgres:
     image: postgres:15
     restart: unless-stopped
+    volumes:
+      - ./postgres-setup/max_conns.sql:/docker-entrypoint-initdb.d/max_conns.sql
     environment:
+      - "PGUSER=architect"
       - "POSTGRES_USER=architect"
       - "POSTGRES_PASSWORD=mysecretpassword"
       - "POSTGRES_DB=architect"

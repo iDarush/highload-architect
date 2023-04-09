@@ -19,4 +19,5 @@ RUN dotnet publish -c release -o /build --no-restore
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build /build ./
+COPY Architect.Migrator/Data/people.csv ./Data/people.csv
 ENTRYPOINT ["dotnet", "Architect.Web.dll"]
